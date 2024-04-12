@@ -10,6 +10,11 @@ class Cart extends Component
 {
     use InteractsWithBanner;
 
+    public function getCartProperty()
+    {
+        return CartFactory::make();
+    }
+
     public function getItemsProperty()
     {
         return CartFactory::make()->items;
