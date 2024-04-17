@@ -8,7 +8,7 @@
                     <th class="text-left">Size</th>
                     <th class="text-left">Price</th>
                     <th class="text-left">Qnaitity</th>
-                    <th class="text-left">Total</th>
+                    <th class="text-right">Total</th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,8 +34,8 @@
                                 </svg>
                             </button>
                         </td>
-                        <td>{{ $item->subtotal }}</td>
-                        <td>
+                        <td class="text-right">{{ $item->subtotal }}</td>
+                        <td class="pl-2">
                             <button wire:click="delete({{ $item->id }})">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -51,18 +51,20 @@
             <tfoot>
                 <tr>
                     <td colspan="5" class="text-right">Total</td>
-                    <td class="font-medium">{{ $this->cart->total }}</td>
+                    <td class="font-medium text-right">{{ $this->cart->total }}</td>
                     <td></td>
                 </tr>
             </tfoot>
         </table>
     </div>
-    <div class="col-span-1 p-5 text-white bg-black rounded-lg shadow">
-        @guest
-            <p class="text-center">Please <a href="{{ route('register') }}" class="underline text-lg-light">register</a> or <a href="{{ route('login') }}" class="underline text-lg-light">login</a> to checkout</p>
-        @endguest
-        @auth
-            <x-button wire:click="checkout" class="w-full">Checkout</x-button>
-        @endauth
+    <div>
+        <div class="col-span-1 p-5 text-white bg-black rounded-lg shadow">
+            @guest
+                <p class="text-center">Please <a href="{{ route('register') }}" class="underline text-lg-light">register</a> or <a href="{{ route('login') }}" class="underline text-lg-light">login</a> to checkout</p>
+            @endguest
+            @auth
+                <x-button wire:click="checkout" class="w-full">Checkout</x-button>
+            @endauth
+        </div>
     </div>
 </div>

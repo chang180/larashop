@@ -12,24 +12,24 @@ class Cart extends Component
 
     public function getCartProperty()
     {
-        return CartFactory::make();
+        return CartFactory::make()->loadMissing(['items', 'items.product', 'items.variant']);
     }
 
     public function getItemsProperty()
     {
-        return CartFactory::make()->items;
+        return $this->cart->items;
     }
 
     public function increment($itemId)
     {
-        CartFactory::make()->items()->where('id', $itemId)->increment('quantity');
+        $this->cart->items()->where('id', $itemId)->increment('quantity');
 
         $this->dispatch('cartUpdated');
     }
 
     public function decrement($itemId)
     {
-        $item = CartFactory::make()->items()->where('id', $itemId)->first();
+        $item = $this->cart->items()->where('id', $itemId)->first();
         if ($item->quantity > 1) {
             $item->decrement('quantity');
             $this->dispatch('cartUpdated');
@@ -38,7 +38,7 @@ class Cart extends Component
 
     public function delete($itemId)
     {
-        CartFactory::make()->items()->where('id', $itemId)->delete();
+        $this->cart->items()->where('id', $itemId)->delete();
 
         $this->dangerBanner('Cart item removed');
 
