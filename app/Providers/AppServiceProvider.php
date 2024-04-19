@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Money\Formatter\IntlMoneyFormatter;
 use App\Actions\Webshop\MigrateSessionCart;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -49,5 +50,8 @@ class AppServiceProvider extends ServiceProvider
             $moneyFormatter = new IntlMoneyFormatter($numberFormatter, $currencies);
             return $moneyFormatter->format($money);
         });
+
+        Cashier::useCustomerModel(User::class);
+        Cashier::calculateTaxes();
     }
 }
